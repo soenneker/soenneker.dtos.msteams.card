@@ -1,16 +1,15 @@
-﻿using Soenneker.Tests.FixturedUnit;
-using Xunit;
+using Soenneker.Tests.HostedUnit;
 
 namespace Soenneker.Dtos.MsTeams.Card.Tests;
 
-[Collection("Collection")]
-public class MsTeamsCardTests : FixturedUnitTest
+[ClassDataSource<Host>(Shared = SharedType.PerTestSession)]
+public class MsTeamsCardTests : HostedUnitTest
 {
-    public MsTeamsCardTests(Fixture fixture, ITestOutputHelper output) : base(fixture, output)
+    public MsTeamsCardTests(Host host) : base(host)
     {
     }
 
-    [Fact]
+    [Test]
     public void Default()
     {
 
