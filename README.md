@@ -5,7 +5,7 @@
 
 # Soenneker.Dtos.MsTeams.Card
 
-Represents a Microsoft Teams message containing one or more Adaptive Card attachments.
+Builds the outer Microsoft Teams message payload used to send one or more Adaptive Card attachments. The model works with both `System.Text.Json` and Newtonsoft.Json.
 
 ## Install
 
@@ -13,13 +13,40 @@ Represents a Microsoft Teams message containing one or more Adaptive Card attach
 dotnet add package Soenneker.Dtos.MsTeams.Card
 ```
 
-## What you get
+## Create a Teams card payload
 
-- `MsTeamsCard` — Represents a Microsoft Teams message containing one or more Adaptive Card attachments.
+```csharp
+using AdaptiveCards;
+using Soenneker.Dtos.AdaptiveCard.Attachments;
+using Soenneker.Dtos.MsTeams.Card;
 
-## API at a glance
+var adaptiveCard = new AdaptiveCard(new AdaptiveSchemaVersion(1, 5));
+adaptiveCard.Body.Add(new AdaptiveTextBlock
+{
+    Text = "Deployment completed",
+    Weight = AdaptiveTextWeight.Bolder
+});
 
-| API | What it does | Result / important behavior |
-| --- | --- | --- |
-| `MsTeamsCard.Type` | Teams message type, such as `message`. | Teams message type, such as `message`. |
-| `MsTeamsCard.Attachments` | Adaptive Card attachments included in the Teams message. | Adaptive Card attachments included in the Teams message. |
+var payload = new MsTeamsCard();
+payload.Attachments.Add(new AdaptiveCardAttachments(adaptiveCard));
+```
+
+`Type` defaults to `message`, and `Attachments` starts as an empty list. Serializing `payload` produces the Teams envelope around the Adaptive Card:
+
+```json
+{
+  "type": "message",
+  "attachments": [
+    {
+      "contentType": "application/vnd.microsoft.card.adaptive",
+      "contentUrl": null,
+      "content": {
+        "type": "AdaptiveCard",
+        "version": "1.5"
+      }
+    }
+  ]
+}
+```
+
+The exact `content` object and treatment of null properties depend on the Adaptive Card and serializer settings. This package only models the payload; it does not validate card schema support or send the message to Teams.

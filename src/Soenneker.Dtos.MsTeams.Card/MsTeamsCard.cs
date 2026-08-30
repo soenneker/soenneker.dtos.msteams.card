@@ -15,12 +15,12 @@ public class MsTeamsCard
     /// </summary>
     [JsonProperty("type")]
     [JsonPropertyName("type")]
-    public string Type { get; set; } = null!;
+    public string Type { get; set; } = "message";
 
     /// <summary>
     /// Adaptive Card attachments included in the Teams message.
     /// </summary>
     [JsonProperty("attachments")]
     [JsonPropertyName("attachments")]
-    public List<AdaptiveCardAttachments> Attachments { get; set; } = null!;
+    public List<AdaptiveCardAttachments> Attachments { get; set; } = [];
 }
