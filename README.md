@@ -5,7 +5,7 @@
 
 # Soenneker.Dtos.MsTeams.Card
 
-Builds the outer Microsoft Teams message payload used to send one or more Adaptive Card attachments. The model works with both `System.Text.Json` and Newtonsoft.Json.
+Builds the outer Microsoft Teams message payload used to send one or more Adaptive Card attachments. The model works with `System.Text.Json`.
 
 ## Install
 
